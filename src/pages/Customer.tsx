@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Table, Form, Input, InputNumber, Button, Space, Switch, message, Popconfirm } from "antd";
+import { Table, Form, Input, InputNumber, Button, Space, Switch, Popconfirm } from "antd";
 import api from "../api/api";
+import { toast } from "react-toastify";
 
 type Customer = {
   accountNumber: string;
@@ -23,7 +24,7 @@ const Customers: React.FC = () => {
       const res = await api.get("/customer");
       setCustomers(res.data);
     } catch (error) {
-      message.error("Failed to fetch customers");
+      toast.error("Failed to fetch customers");
     } finally {
       setLoading(false);
     }
@@ -33,26 +34,26 @@ const Customers: React.FC = () => {
     try {
       if (isEdit) {
         await api.put(`/customer?accountNumber=${values.accountNumber}`, values);
-        message.success("Customer updated successfully");
+        toast.success("Customer updated successfully");
       } else {
         await api.post("/customer", values);
-        message.success("Customer added successfully");
+        toast.success("Customer added successfully");
       }
       fetchCustomers();
       form.resetFields();
       setIsEdit(false);
     } catch (error) {
-      message.error("Error saving customer");
+      toast.error("Error saving customer");
     }
   };
 
   const handleDelete = async (accountNumber: string) => {
     try {
       await api.delete(`/customer?accountNumber=${accountNumber}`);
-      message.success("Customer deleted successfully");
+      toast.success("Customer deleted successfully");
       fetchCustomers();
     } catch {
-      message.error("Error deleting customer");
+      toast.error("Error deleting customer");
     }
   };
 
