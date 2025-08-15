@@ -3,10 +3,10 @@ import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import CustomerPage from './pages/Customer';
 import ItemPage from './pages/Item';
-import BillPage from './pages/Bill';
-import BillReportPage from './pages/BillReport';
 import Layout from './components/Layout';
 import { ToastContainer } from 'react-toastify';
+import CreateBill from './pages/CreateBill';
+import BillHistory from './pages/BillHistory';
 
 function App() {
   return (
@@ -19,8 +19,8 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="/customer" element={<CustomerPage />} />
             <Route path="/item" element={<ItemPage />} />
-            <Route path="/bill" element={<BillPage />} />
-            <Route path="/bill-report" element={<BillReportPage />} />
+            <Route path="/create-bill" element={<CreateBill />} />
+            <Route path="/bill-history" element={<BillHistory />} />
           </Route>
         </Routes>
       </Router>

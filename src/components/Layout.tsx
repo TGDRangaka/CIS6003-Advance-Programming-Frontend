@@ -1,4 +1,4 @@
-import { User, Package, FileText, BarChart3, LogOut, Menu } from "lucide-react";
+import { User, Package, FileText, LogOut, Menu } from "lucide-react";
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 
@@ -8,8 +8,8 @@ export default function Layout() {
     const navigationItems = [
         { to: "/customer", label: "Customer", icon: User },
         { to: "/item", label: "Item", icon: Package },
-        { to: "/bill", label: "Bill", icon: FileText },
-        { to: "/bill-report", label: "Bill Report", icon: BarChart3 },
+        { to: "/create-bill", label: "Create Bill", icon: FileText },
+        { to: "/bill-history", label: "Bill History", icon: FileText },
     ];
 
     return (
