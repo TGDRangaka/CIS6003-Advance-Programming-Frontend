@@ -74,8 +74,8 @@ const Customers: React.FC = () => {
     { title: "Units", dataIndex: "unitConsumed", key: "unitConsumed" },
     {
       title: "Active",
-      dataIndex: "active",
-      key: "active",
+      dataIndex: "isActive",
+      key: "isActive",
       render: (active: boolean) => (active ? "Yes" : "No"),
     },
     {
