@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Form, Input, InputNumber, Button, Space, Switch, Popconfirm } from "antd";
+import { Table, Form, Input, Button, Space, Popconfirm } from "antd";
 import api from "../api/api";
 import { toast } from "react-toastify";
 
@@ -32,6 +32,18 @@ const Customers: React.FC = () => {
 
   const handleSubmit = async (values: Customer) => {
     try {
+        // Check if account number exists before adding
+        const existRes = await api.get(`/customer/is-exist?accountNumber=${values.accountNumber}`);
+        if (existRes.data.exists) {
+          form.setFields([
+            {
+              name: "accountNumber",
+              errors: ["Account number already exists. Please use a different one."],
+            },
+          ]);
+          return;
+        }
+
       if (isEdit) {
         await api.put(`/customer?accountNumber=${values.accountNumber}`, values);
         toast.success("Customer updated successfully");
@@ -142,18 +154,6 @@ const Customers: React.FC = () => {
             rules={[{ required: true, message: "Enter phone number" }]}
           >
             <Input placeholder="0771234567" />
-          </Form.Item>
-
-          <Form.Item
-            name="unitConsumed"
-            label="Units"
-            rules={[{ required: true, message: "Enter units" }]}
-          >
-            <InputNumber min={0} />
-          </Form.Item>
-
-          <Form.Item name="active" label="Active" valuePropName="checked">
-            <Switch />
           </Form.Item>
 
           <Form.Item>
