@@ -1,9 +1,11 @@
 import { User, Package, FileText, LogOut, Menu } from "lucide-react";
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 export default function Layout() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
+    const { logout } = useAuthStore();
 
     const navigationItems = [
         { to: "/customer", label: "Customer", icon: User },
@@ -65,7 +67,7 @@ export default function Layout() {
 
                     {/* Logout Button */}
                     <div className="p-4 border-t border-gray-200">
-                        <button className="w-full flex items-center gap-3 px-3 py-2.5 text-gray-700 rounded-lg hover:bg-red-50 hover:text-red-600 transition-all duration-200 group">
+                        <button onClick={logout} className="w-full flex items-center gap-3 px-3 py-2.5 text-gray-700 rounded-lg hover:bg-red-50 hover:text-red-600 transition-all duration-200 group">
                             <LogOut className="w-5 h-5 text-gray-500 group-hover:text-red-500 transition-colors" />
                             {sidebarOpen && (
                                 <span className="font-medium">Logout</span>
