@@ -5,7 +5,7 @@ import { useAuthStore } from "../store/authStore";
 
 export default function Layout() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
-    const { logout } = useAuthStore();
+    const { logout, user } = useAuthStore();
 
     const navigationItems = [
         { to: "/customer", label: "Customer", icon: User },
@@ -26,10 +26,8 @@ export default function Layout() {
                         <Menu className="w-5 h-5 text-gray-600" />
                     </button>
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                            <span className="text-white font-bold text-sm">MA</span>
-                        </div>
-                        <h1 className="text-xl font-semibold text-gray-800">My Application</h1>
+                        <img src="/logo.png" alt="Logo" className="w-8 h-8 rounded-md" />
+                        <h1 className="text-xl font-semibold text-gray-800">Bookshop Management</h1>
                     </div>
                 </div>
 
@@ -40,6 +38,10 @@ export default function Layout() {
                     </div>
                     <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
                         <User className="w-4 h-4 text-gray-600" />
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-sm text-gray-600">{user?.name}</span>
+                        <span className="text-xs text-gray-400">{user?.email}</span>
                     </div>
                 </div>
             </header>

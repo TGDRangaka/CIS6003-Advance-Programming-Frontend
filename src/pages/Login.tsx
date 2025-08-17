@@ -15,12 +15,21 @@ export default function AuthPage() {
   const { login } = useAuthStore();
   const navigate = useNavigate();
 
+  // Password validation helper
+  const passwordRules = [
+    { required: true, message: "Enter your password" },
+    { min: 8, message: "Password must be at least 8 characters" },
+    {
+      pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$/,
+      message: "Password must contain letters and numbers",
+    },
+  ];
+
   const handleLogin = async (values: any) => {
     try {
       const res = await api.get(
         `/auth/login?email=${encodeURIComponent(values.username)}&password=${encodeURIComponent(values.password)}`
       );
-
       navigate("/");
       setError(null);
       login(res.data);
@@ -30,6 +39,10 @@ export default function AuthPage() {
   };
 
   const handleRegister = async (values: any) => {
+    if (values.password !== values.confirm) {
+      setError("Passwords do not match.");
+      return;
+    }
     try {
       await api.post(
         "/auth/register",
@@ -39,24 +52,21 @@ export default function AuthPage() {
           password: values.password,
         }
       );
-
       setError(null);
       toast.success("Registration successful! You can now log in.");
       setActiveTab("login");
-    } catch (err) {
-      // handle register error
-      setError("Registration failed. Please try again.");
+    } catch (err: any) {
+      console.log(err);
+      const msg = err.response.data.error;
+      setError(msg ?? 'Registration failed.');
     }
   };
 
   return (
     <div
       className="bg-cover bg-center relative"
-      style={{
-        backgroundImage: `url('/books-bg.jpg')`, // put your background image
-      }}
     >
-      <div className="absolute inset-0 bg-black/40" /> {/* dark overlay */}
+      <div className="absolute inset-0 bg-black/40 rounded-2xl" /> {/* dark overlay */}
 
       {/* Glass Pane */}
       <div className="relative z-10 w-[420px] rounded-2xl backdrop-blur-lg bg-white/10 border border-white/30 shadow-xl p-8">
@@ -134,6 +144,7 @@ export default function AuthPage() {
                 rules={[
                   { required: true, message: "Enter your email" },
                   { type: "email", message: "Enter valid email" },
+                  { whitespace: true, message: "No spaces allowed" },
                 ]}
               >
                 <Input
@@ -146,11 +157,34 @@ export default function AuthPage() {
               <Form.Item
                 name="password"
                 label={<span className="text-white">Password</span>}
-                rules={[{ required: true, message: "Enter your password" }]}
+                rules={passwordRules}
               >
                 <Input.Password
                   prefix={<LockOutlined className="text-gray-400" />}
                   placeholder="Enter password"
+                  className="!bg-white/20 !text-white placeholder-gray-300 !border-white/30"
+                />
+              </Form.Item>
+
+              <Form.Item
+                name="confirm"
+                label={<span className="text-white">Confirm Password</span>}
+                dependencies={["password"]}
+                rules={[
+                  { required: true, message: "Please confirm your password" },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error("Passwords do not match"));
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password
+                  prefix={<LockOutlined className="text-gray-400" />}
+                  placeholder="Confirm password"
                   className="!bg-white/20 !text-white placeholder-gray-300 !border-white/30"
                 />
               </Form.Item>
