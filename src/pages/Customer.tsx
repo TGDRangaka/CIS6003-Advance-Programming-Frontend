@@ -32,7 +32,12 @@ const Customers: React.FC = () => {
 
   const handleSubmit = async (values: Customer) => {
     try {
-        // Check if account number exists before adding
+      // Check if account number exists before adding
+
+      if (isEdit) {
+        await api.put(`/customer?accountNumber=${values.accountNumber}`, values);
+        toast.success("Customer updated successfully");
+      } else {
         const existRes = await api.get(`/customer/is-exist?accountNumber=${values.accountNumber}`);
         if (existRes.data.exists) {
           form.setFields([
@@ -43,11 +48,6 @@ const Customers: React.FC = () => {
           ]);
           return;
         }
-
-      if (isEdit) {
-        await api.put(`/customer?accountNumber=${values.accountNumber}`, values);
-        toast.success("Customer updated successfully");
-      } else {
         await api.post("/customer", values);
         toast.success("Customer added successfully");
       }
@@ -132,7 +132,7 @@ const Customers: React.FC = () => {
               { pattern: /^CUST\d{3}$/, message: "Format must be CUST followed by 3 digits (e.g., CUST001)" },
             ]}
           >
-            <Input placeholder="CUST001" />
+            <Input placeholder="CUST001" className="uppercase" />
           </Form.Item>
 
           <Form.Item
