@@ -127,7 +127,10 @@ const Customers: React.FC = () => {
           <Form.Item
             name="accountNumber"
             label="Account #"
-            rules={[{ required: true, message: "Enter account number" }]}
+            rules={[
+              { required: true, message: "Enter account number" },
+              { pattern: /^CUST\d{3}$/, message: "Format must be CUST followed by 3 digits (e.g., CUST001)" },
+            ]}
           >
             <Input placeholder="CUST001" />
           </Form.Item>
