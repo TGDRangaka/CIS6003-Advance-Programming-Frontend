@@ -110,7 +110,7 @@ const Customers: React.FC = () => {
           form={form}
           layout="vertical"
           onFinish={handleSubmit}
-          className="flex flex-col w-60 gap-3 bg-white border border-gray-200 shadow-lg !p-4 rounded-md"
+          className="flex flex-col w-96 gap-3 bg-white border border-gray-200 shadow-lg !p-4 rounded-md"
         >
           <Form.Item
             name="accountNumber"
