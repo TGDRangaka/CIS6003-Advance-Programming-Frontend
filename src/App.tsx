@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import CreateBill from './pages/CreateBill';
 import BillHistory from './pages/BillHistory';
 import AuthProvider from './components/AuthProvider';
+import HelpPage from './pages/HelpSection';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Route path="/item" element={<ItemPage />} />
               <Route path="/create-bill" element={<CreateBill />} />
               <Route path="/bill-history" element={<BillHistory />} />
+              <Route path="/help" element={<HelpPage />} />
 
               <Route path="*" element={<Navigate to="/customer" replace />} />
             </Route>

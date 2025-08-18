@@ -1,4 +1,4 @@
-import { User, Package, FileText, LogOut, Menu } from "lucide-react";
+import { User, Package, LogOut, Menu, Notebook, FileQuestion, Clock3 } from "lucide-react";
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
@@ -10,8 +10,9 @@ export default function Layout() {
     const navigationItems = [
         { to: "/customer", label: "Customer", icon: User },
         { to: "/item", label: "Item", icon: Package },
-        { to: "/create-bill", label: "Create Bill", icon: FileText },
-        { to: "/bill-history", label: "Bill History", icon: FileText },
+        { to: "/create-bill", label: "Create Bill", icon: Notebook },
+        { to: "/bill-history", label: "Bill History", icon: Clock3 },
+        { to: "/help", label: "Help", icon: FileQuestion },
     ];
 
     return (
@@ -56,7 +57,7 @@ export default function Layout() {
                                 <Link
                                     key={item.to}
                                     to={item.to}
-                                    className="flex items-center gap-3 px-3 py-2.5 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-all duration-200 group"
+                                    className="flex items-center gap-3 px-3 py-2.5 text-gray-700 rounded-lg bg-gray-50 border border-gray-200 hover:shadow-md hover:bg-white hover:scale-105 hover:text-gray-900 transition-all duration-200 group"
                                 >
                                     <IconComponent className="w-5 h-5 text-gray-500 group-hover:text-blue-600 transition-colors" />
                                     {sidebarOpen && (
@@ -82,7 +83,7 @@ export default function Layout() {
                 <div className="flex-1 flex flex-col overflow-hidden">
                     <div className="flex-1 overflow-auto bg-gray-50">
                         <div className="p-6 h-full">
-                            <div className="bg-white rounded-xl shadow-sm border border-gray-200 h-full p-6">
+                            <div className="bg-white rounded-xl shadow-xl border border-gray-200 min-h-full p-6">
                                 <Outlet />
                             </div>
                         </div>
