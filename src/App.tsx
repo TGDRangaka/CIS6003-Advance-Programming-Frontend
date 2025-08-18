@@ -7,6 +7,7 @@ import CreateBill from './pages/CreateBill';
 import BillHistory from './pages/BillHistory';
 import AuthProvider from './components/AuthProvider';
 import HelpPage from './pages/HelpSection';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -16,13 +17,14 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Layout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/customer" element={<CustomerPage />} />
               <Route path="/item" element={<ItemPage />} />
               <Route path="/create-bill" element={<CreateBill />} />
               <Route path="/bill-history" element={<BillHistory />} />
               <Route path="/help" element={<HelpPage />} />
 
-              <Route path="*" element={<Navigate to="/customer" replace />} />
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Route>
           </Routes>
         </AuthProvider>

@@ -1,4 +1,4 @@
-import { User, Package, LogOut, Menu, Notebook, FileQuestion, Clock3 } from "lucide-react";
+import { User, Package, LogOut, Menu, Notebook, FileQuestion, Clock3, Monitor } from "lucide-react";
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
@@ -8,6 +8,7 @@ export default function Layout() {
     const { logout, user } = useAuthStore();
 
     const navigationItems = [
+        { to: "/dashboard", label: "Dashboard", icon: Monitor },
         { to: "/customer", label: "Customer", icon: User },
         { to: "/item", label: "Item", icon: Package },
         { to: "/create-bill", label: "Create Bill", icon: Notebook },
