@@ -16,7 +16,7 @@ type BillItem = {
     price: number;
 };
 
-type Bill = {
+export type Bill = {
     billId: string;
     accountNumber: string;
     billDate: string;
