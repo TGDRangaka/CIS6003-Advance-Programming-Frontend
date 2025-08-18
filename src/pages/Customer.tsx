@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Table, Form, Input, Button, Space, Popconfirm } from "antd";
 import api from "../api/api";
 import { toast } from "react-toastify";
+import { useAuthStore } from "../store/authStore";
+import { data } from "react-router-dom";
 
 type Customer = {
   accountNumber: string;
@@ -17,6 +19,7 @@ const Customers: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [form] = Form.useForm();
+  const { user } = useAuthStore();
 
   const fetchCustomers = async () => {
     setLoading(true);
@@ -32,7 +35,11 @@ const Customers: React.FC = () => {
 
   const handleSubmit = async (values: Customer) => {
     try {
-      // Check if account number exists before adding
+      if(!user){
+        toast.error("You must be logged in to perform this action");
+        return;
+      }
+      console.log(user);
 
       if (isEdit) {
         await api.put(`/customer?accountNumber=${values.accountNumber}`, values);
@@ -48,7 +55,7 @@ const Customers: React.FC = () => {
           ]);
           return;
         }
-        await api.post("/customer", values);
+        await api.post(`/customer?userId=${user.userId}`, values);
         toast.success("Customer added successfully");
       }
       fetchCustomers();
