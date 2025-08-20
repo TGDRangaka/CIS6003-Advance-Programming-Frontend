@@ -1,10 +1,38 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import CustomerPage from './pages/Customer';
+import ItemPage from './pages/Item';
+import Layout from './components/Layout';
+import { ToastContainer } from 'react-toastify';
+import CreateBill from './pages/CreateBill';
+import BillHistory from './pages/BillHistory';
+import AuthProvider from './components/AuthProvider';
+import HelpPage from './pages/HelpSection';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
-    <>
-      <h1 className='text-red-500'>Test</h1>
-    </>
-  )
+    <div>
+
+      <Router>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/customer" element={<CustomerPage />} />
+              <Route path="/item" element={<ItemPage />} />
+              <Route path="/create-bill" element={<CreateBill />} />
+              <Route path="/bill-history" element={<BillHistory />} />
+              <Route path="/help" element={<HelpPage />} />
+
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            </Route>
+          </Routes>
+        </AuthProvider>
+      </Router>
+
+      <ToastContainer />
+    </div>
+  );
 }
 
-export default App
+export default App;
